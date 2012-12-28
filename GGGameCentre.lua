@@ -147,6 +147,13 @@ function GGGameCentre:requestFriend( message, playerIDs, emailAddresses )
 
 end
 
+--- Sets a new high score.
+-- @param leaderboard String id of the leaderboard to add the score to.
+-- @param score The value to set the score to.
+function GGGameCentre:setHighScore( leaderboard, score )
+	gameNetwork.request( "setHighScore", { localPlayerScore = { category = leaderboard, value = score } } )
+end
+
 --- Called called when sign in dialog is shown. Called internally.
 function GGGameCentre:onShowSignIn()
 	if self.listener then
