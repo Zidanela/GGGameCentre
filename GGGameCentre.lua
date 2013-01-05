@@ -74,6 +74,7 @@ function GGGameCentre:new( listener )
 	end
 	
 	self.localPlayer = nil
+	self.friends = nil
 	
     return self
     
@@ -199,6 +200,25 @@ function GGGameCentre:getLocalPlayer()
 	return self.localPlayer
 end
 
+--- Loads the friends of the local player and calls the listener function with a 'loadFriends' phase and 'friends' table attached. 
+function GGGameCentre:loadFriends()
+
+	local listener = function( event )
+		self.friends = event.data
+		if self.listener then
+			self.listener{ name = "gameCentre", phase = "loadFriends", friends = self.friends }
+		end
+	end
+	
+	gameNetwork.request( "loadFriends", { listener = listener } )
+
+end
+
+--- Gets the friends of the local player, assuming they've already been loaded via GGGameCentre:getFriends()
+function GGGameCentre:getFriends()
+	return self.friends
+end
+
 --- Called called when sign in dialog is shown. Called internally.
 function GGGameCentre:onShowSignIn()
 	if self.listener then
@@ -253,6 +273,7 @@ function GGGameCentre:destroy()
 	self.currentView = nil
 	self.listener = nil
 	self.localPlayer = nil
+	self.friends = nil
 end
 
 return GGGameCentre

@@ -103,6 +103,23 @@ gameCentre:loadLocalPlayer()
 local player = gameCentre:getLocalPlayer()
 ```
 
+##### Load the friends of the local player.
+```lua
+local listener = function( event )
+	if event.phase == "loadFriends" then
+		print( event.freinds[ 1 ].playerID )
+	end
+end
+
+local gameCentre = GGGameCentre:new( listener )
+
+gameCentre:loadFriends()
+```
+
+##### Get the friends of the local player after it has already been loaded.
+local friends = gameCentre:getFriends()
+```
+
 ##### Destroy this GGGameCentre object
 ```lua
 gameCentre:destroy()
