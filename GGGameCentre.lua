@@ -73,6 +73,8 @@ function GGGameCentre:new( listener )
 		self:onViewDismiss( event )
 	end
 	
+	self.localPlayer = nil
+	
     return self
     
 end
@@ -178,6 +180,25 @@ function GGGameCentre:resetAchievements()
 	gameNetwork.request( "resetAchievements", {} )
 end
 
+--- Loads the local player and calls the listener function with a 'loadLocalPlayer' phase and 'player' attached. 
+function GGGameCentre:loadLocalPlayer()
+
+	local listener = function( event )
+		self.localPlayer = event.data
+		if self.listener then
+			self.listener{ name = "gameCentre", phase = "loadLocalPlayer", player = self.localPlayer }
+		end
+	end
+	
+	gameNetwork.request( "loadLocalPlayer", { listener = listener } )
+
+end
+
+--- Gets the local player, assuming it's already been loaded via GGGameCentre:loadLocalPlayer()
+function GGGameCentre:getLocalPlayer()
+	return self.localPlayer
+end
+
 --- Called called when sign in dialog is shown. Called internally.
 function GGGameCentre:onShowSignIn()
 	if self.listener then
@@ -231,6 +252,7 @@ function GGGameCentre:destroy()
 	self.dismissCallback = nil
 	self.currentView = nil
 	self.listener = nil
+	self.localPlayer = nil
 end
 
 return GGGameCentre

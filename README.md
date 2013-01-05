@@ -86,6 +86,23 @@ gameCentre:unlockAchievement( "com.game.achievement2", 50 )
 gameCentre:resetAchievements()
 ```
 
+##### Load the local player.
+```lua
+local listener = function( event )
+	if event.phase == "loadLocalPlayer" then
+		print( event.player.playerID )
+	end
+end
+
+local gameCentre = GGGameCentre:new( listener )
+
+gameCentre:loadLocalPlayer()
+```
+
+##### Get the local player after it has already been loaded.
+local player = gameCentre:getLocalPlayer()
+```
+
 ##### Destroy this GGGameCentre object
 ```lua
 gameCentre:destroy()
