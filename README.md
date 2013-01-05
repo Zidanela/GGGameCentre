@@ -1,7 +1,7 @@
 GGGameCentre
 ============
 
-	GGGameCentre makes working with Game Center nice and easy.
+GGGameCentre makes working with Game Center nice and easy.
 	
 Basic Usage
 -------------------------
@@ -64,6 +64,26 @@ gameCentre:requestFriends( "Will you be my friend?", nil, { "me@me.com", "bob@me
 ##### Check if the player is logged in
 ```lua
 local loggedIn = gameCentre:isLoggedIn()
+```
+
+##### Set a new highscore.
+```lua
+gameCentre:setHighScore( "com.game.leaderboard", 25 )
+```
+
+##### Unlock an achievement.
+```lua
+gameCentre:unlockAchievement( "com.game.achievement1" )
+```
+
+##### Partly unlock an achievement.
+```lua
+gameCentre:unlockAchievement( "com.game.achievement2", 50 )
+```
+
+##### Reset all achievements.
+```lua
+gameCentre:resetAchievements()
 ```
 
 ##### Destroy this GGGameCentre object

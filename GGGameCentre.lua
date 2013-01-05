@@ -154,6 +154,30 @@ function GGGameCentre:setHighScore( leaderboard, score )
 	gameNetwork.request( "setHighScore", { localPlayerScore = { category = leaderboard, value = score } } )
 end
 
+--- Unlocks an achievement.
+-- @param id String id of the achievement to unlock.
+-- @param percent Optional number representing the completion percentage of the achievement, 100 will fully unlock it. Default is 100.
+-- @param showBanner Optional boolean to set whether a banner should automatically be shown when the achievement reaches 100 percent. iOS 5+ only. Default is true.
+-- @param listener Optional listener callback. Will fill event.data with a table that corresponds to the Apple GKAchievement class that you just unlocked. 
+function GGGameCentre:unlockAchievement( id, percent, showBanner, listener )
+	
+	if percent == nil then
+		percent = 100
+	end
+	
+	if showBanner == nil then
+		showBanner = true
+	end
+	
+	gameNetwork.request( "unlockAchievement", { achievement = { identifier = id, percentComplete = percent, showsCompletionBanner = showBanner }, listener = listener } )
+
+end
+
+--- Resets all achievements for the current player. There is no undoing this.
+function GGGameCentre:resetAchievements()
+	gameNetwork.request( "resetAchievements", {} )
+end
+
 --- Called called when sign in dialog is shown. Called internally.
 function GGGameCentre:onShowSignIn()
 	if self.listener then
